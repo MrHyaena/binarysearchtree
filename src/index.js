@@ -51,6 +51,66 @@ function find(root, value) {
   }
 }
 
+let levelOrderArray = [];
+console.log(inOrder());
+
+function callLevelOrderArray() {
+  console.log(levelOrderArray);
+}
+
+function inOrder(callback) {
+  getRoot(myArray, 0, myArray.length);
+
+  function getRoot(arr, start, end) {
+    if (start > end) return null;
+
+    // Find the middle element
+    let mid = start + Math.floor((end - start) / 2);
+
+    let midData = arr[mid];
+
+    // Create root node
+    let root = new node(midData);
+
+    levelOrderArray.push(root);
+
+    // Create left subtree
+    root.left = getRoot(arr, start, mid - 1);
+
+    // Create right subtree
+    root.right = getRoot(arr, mid + 1, end);
+
+    return root;
+  }
+
+  return levelOrderArray;
+}
+
+console.log(findDepth(myTree.root, 5));
+
+function findDepth(root, x) {
+  // Base case
+  if (root == null) return -1;
+
+  // Initialize distance as -1
+  var dist = -1;
+
+  // Check if x is current node=
+  if (
+    root.data == x ||
+    // Otherwise, check if x is
+    // present in the left subtree
+    (dist = findDepth(root.left, x)) >= 0 ||
+    // Otherwise, check if x is
+    // present in the right subtree
+    (dist = findDepth(root.right, x)) >= 0
+  )
+    // Return depth of the node
+    return dist + 1;
+
+  return dist;
+}
+
 // Function for building a whole tree
 
 function buildTree(array) {
